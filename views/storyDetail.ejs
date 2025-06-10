@@ -15,7 +15,7 @@
         <h3>Story Progress:</h3>
         <% if (story.snippets && story.snippets.length > 0) { %>
             <% story.snippets.forEach(snippet => { %>
-                <div class="snippet" id="snippet-<%= snippet._id %>">
+                <div class="snippet" id="snippet-<%= snippet._id %>" data-snippet-content="<%= snippet.content %>">
                     <p class="snippet-content"><%= snippet.content %></p>
                     <p class="snippet-meta">
                         <em>By:
@@ -24,6 +24,12 @@
                             </span>
                             on <%= new Date(snippet.createdAt).toLocaleString() %>
                         </em>
+                        <% if (currentUser && snippet.author && currentUser.toString() === snippet.author._id.toString()) { %>
+                            <span class="snippet-actions">
+                                <button class="btn-edit-snippet" data-snippet-id="<%= snippet._id %>">Edit</button>
+                                <button class="btn-delete-snippet" data-snippet-id="<%= snippet._id %>">Delete</button>
+                            </span>
+                        <% } %>
                     </p>
                 </div>
             <% }); %>

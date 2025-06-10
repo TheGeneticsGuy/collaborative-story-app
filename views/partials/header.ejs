@@ -7,6 +7,11 @@
     <meta name="description" content="Build a story by collaborating with multiple people">
     <meta name="author" content="Aaron Topping">
 
+    <!-- Needed to create a current-user-id so on my story details page the edit/delete only the currentUser could do that to their own -->
+    <% if (typeof currentUser !== 'undefined' && currentUser) { %>
+        <meta name="current-user-id" content="<%= currentUser %>">
+    <% } %>
+
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>

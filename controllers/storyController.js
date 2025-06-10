@@ -177,3 +177,71 @@ exports.postAddSnippet = async (req, res) => {
         res.status(500).send('Server Error adding snippet');
     }
 };
+
+exports.updateSnippet = async (req, res) => {
+    const { content } = req.body;
+    const { storyId, snippetId } = req.params;
+    const userId = req.session.userId;
+
+    if (!content) {
+        return res.status(400).json({ message: 'Content should not be empty' });
+    }
+
+    try {
+        const snippet = await Snippet.findById(snippetId);
+
+        if (!snippet) {
+            return res.status(404).json({ message: 'Story snippet not found - concurrency?' });
+        }
+
+        if (snippet.author.toString() !== userId.toString()) {
+            return res.status(403).json({ message: 'User not authorized to modify this snippet' });
+        }
+
+        snippet.content = content;
+        await snippet.save();
+
+        const populatedSnippet = await Snippet.findById(snippetId).populate('author', 'username');
+
+        req.io.to(storyId).emit('snippet_updated', populatedSnippet);
+
+        res.status(200).json({ message: 'Story snippet updated successfully', snippet: populatedSnippet });
+
+    } catch (error) {
+        console.error('Error updating snippet:', error);
+        res.status(500).json({ message: 'Server error - unable to update snippet' });
+    }
+};
+
+exports.deleteSnippet = async (req, res) => {
+    const { storyId, snippetId } = req.params;
+    const userId = req.session.userId;
+
+    try {
+        const snippet = await Snippet.findById(snippetId);
+
+        if (!snippet) {
+            return res.status(404).json({ message: 'Story snippet not found' });
+        }
+
+        if (snippet.author.toString() !== userId.toString()) {
+            return res.status(403).json({ message: 'User not authorized to delete' });
+        }
+
+        await Snippet.findByIdAndDelete(snippetId);
+
+        // Don't forget to remove it from the snippet array collection!
+        await Story.findByIdAndUpdate(storyId, {
+            $pull: { snippets: snippetId }
+        });
+
+        // Emit event to all clients in the story's room
+        req.io.to(storyId).emit('snippet_deleted', { snippetId: snippetId, storyId: storyId });
+
+        res.status(200).json({ message: 'Snippet deleted successfully' });
+
+    } catch (error) {
+        console.error('Error deleting snippet:', error);
+        res.status(500).json({ message: 'Server error deleting snippet' });
+    }
+};

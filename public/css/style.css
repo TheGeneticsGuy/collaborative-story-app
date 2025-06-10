@@ -251,3 +251,33 @@ button:hover {
     line-height: 1.7;
     text-indent: 2em;
 }
+
+.snippet-actions {
+    margin-left: 10px;
+    display: inline-block;
+}
+
+.snippet-actions button {
+    padding: 3px 8px;
+    font-size: 0.8em;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.btn-edit-snippet {
+    background-color: #ffc107;
+    color: #212529;
+    border: 1px solid #dda600;
+}
+.btn-edit-snippet:hover {
+    background-color: #e0a800;
+}
+
+.btn-delete-snippet {
+    background-color: #dc3545;
+    color: white;
+    border: 1px solid #b02a37;
+}
+.btn-delete-snippet:hover {
+    background-color: #c82333;
+}

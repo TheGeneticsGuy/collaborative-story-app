@@ -19,4 +19,10 @@ router.get('/stories/:id/full', storyController.getFullStoryPage);
 // POST /stories/:id/snippets - Add a new snippet to a story
 router.post('/stories/:id/snippets', storyController.postAddSnippet);
 
+// PUT /stories/:storyId/snippets/:snippetId - Update a specific snippet
+router.put('/stories/:storyId/snippets/:snippetId', storyController.updateSnippet);
+
+// DELETE /stories/:storyId/snippets/:snippetId - Delete a specific snippet
+router.delete('/stories/:storyId/snippets/:snippetId', storyController.deleteSnippet);
+
 module.exports = router;
