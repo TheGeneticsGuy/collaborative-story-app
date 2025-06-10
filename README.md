@@ -2,13 +2,13 @@
 
 [Click here for LIVE deployment of the Collaborative Storytelling App](https://collaborative-story-app.onrender.com)
 
-This goal of this project was to build a real-time, interactive web applications, specifically Node.js and Socket.IO, coupled with a cloud-based NoSQL database. The aim was to build a platform where users can collaboratively write a story together and have those collaborations happen on the fly. Essentially, this serves as a practical demonstration of the implementation of a full-stack JavaScript, real-time communication, and cloud database integration application.
+This goal of this project was to build a real-time, interactive web application, specifically Node.js and Socket.IO, coupled with a cloud-based NoSQL database. The aim was to build a platform where users can collaboratively write a story together and have those collaborations happen on the fly. Essentially, this serves as a practical demonstration of the implementation of a full-stack JavaScript, real-time communication, and cloud database application.
 
 It goes beyond just a simple board or forum of entries per person, but a way to view the final result by clicking the "View Story" button and allowing the program to append all of the entries into a final storytelling result. Full CRUD implementation with the ability to Create story snippets, Read them, Update them (edit), as well as Delete them.
 
 Furthermore, an additional purpose in developing this was to gain more experience with the MERN stack (MongoDB, Express.js, React/EJS, Node.js), which is basically a branch off of what I learned in CSE 340, integrating it into the project-driven CSE 310 course. I wanted to understand how to structure an application that supports concurrent user interactions and data synchronization, which is something I had not done "live" before, yet is basically the norm in most modern web services. I was able to work with session management, WebSocket communication, and asynchronous database operations. Really cool stuff!
 
-[Software Demo Video](http://youtube.link.goes.here)
+[Software Demo](https://youtu.be/b8U_QSqEGJ8)
 
 # Cloud Database
 
