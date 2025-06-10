@@ -1,0 +1,21 @@
+<%- include('partials/header') %>
+
+<div class="full-story-page">
+    <h2><%= story.title %></h2>
+    <p class="story-meta">
+        A collaborative story started by: <%= story.author ? story.author.username : 'Unknown Author' %>.
+    </p>
+
+    <div class="story-content card">
+        <% formattedStoryContent.forEach(paragraph => { %>
+            <p><%= paragraph %></p>
+        <% }); %>
+        <% if (formattedStoryContent.length === 0) { %>
+            <p><em>This story is just beginning...</em></p>
+        <% } %>
+    </div>
+
+    <a href="/stories/<%= story._id %>" class="btn-back">Back to Story Details</a>
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,44 @@
+<%- include('partials/header') %>
+
+<div class="stories-page">
+    <h2>All Stories</h2>
+
+    <div class="create-story-form card">
+        <h3>Create a New Story</h3>
+        <form action="/stories" method="POST">
+            <div>
+                <label for="title">Story Title:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <button type="submit">Start New Story</button>
+        </form>
+    </div>
+
+    <div class="story-list card">
+        <h3>Existing Stories</h3>
+        <% if (stories.length > 0) { %>
+            <ul>
+                <% stories.forEach(story => { %>
+                    <li>
+                        <a href="/stories/<%= story._id %>"><%= story.title %></a>
+                        <span class="story-meta">
+                            (Started by: <%= story.author ? story.author.username : 'Unknown' %>
+                            on <%= new Date(story.createdAt).toLocaleDateString() %>)
+                            -
+                            <% if (story.snippets && story.snippets.length > 0) { %>
+                                 <!-- This part is so I can show number of snippets in a story without naving to it-->
+                                <%= story.snippets.length %> story snippet<%= story.snippets.length === 1 ? '' : 's' %>
+                            <% } else { %>
+                                0 snippets
+                            <% } %>
+                        </span>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } else { %>
+            <p>No stories yet. Create the first one?</p>
+        <% } %>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

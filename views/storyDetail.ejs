@@ -1,0 +1,53 @@
+<%- include('partials/header') %>
+
+<div class="story-detail-page" data-story-id="<%= story._id %>">
+    <h2><%= story.title %></h2>
+    <p class="story-meta">
+        Started by: <%= story.author ? story.author.username : 'Unknown Author' %>
+        on <%= new Date(story.createdAt).toLocaleDateString() %>
+    </p>
+
+    <div style="margin-bottom: 20px;">
+        <a href="/stories/<%= story._id %>/full" class="button-style">View Full Story</a>
+    </div>
+
+    <div id="snippets-container" class="card">
+        <h3>Story Progress:</h3>
+        <% if (story.snippets && story.snippets.length > 0) { %>
+            <% story.snippets.forEach(snippet => { %>
+                <div class="snippet" id="snippet-<%= snippet._id %>">
+                    <p class="snippet-content"><%= snippet.content %></p>
+                    <p class="snippet-meta">
+                        <em>By:
+                            <span class="author-name" data-author-username="<%= snippet.author ? snippet.author.username : 'Contributor' %>">
+                                <%= snippet.author ? snippet.author.username : 'Contributor' %>
+                            </span>
+                            on <%= new Date(snippet.createdAt).toLocaleString() %>
+                        </em>
+                    </p>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <p id="no-snippets-message">No contributions yet. Be the first to add to the story!</p>
+        <% } %>
+    </div>
+
+
+    <div class="add-snippet-form card">
+        <h3>Add Your Contribution</h3>
+        <p class="form-instruction">
+            Tip: Start a line with <code>##</code> to begin a new paragraph in the final story view.
+        </p>
+        <form action="/stories/<%= story._id %>/snippets" method="POST">
+            <div>
+                <label for="content">Your snippet:</label>
+                <textarea id="content" name="content" rows="6" required></textarea>
+            </div>
+            <button type="submit">Add to Story</button>
+        </form>
+    </div>
+
+
+</div>
+
+<%- include('partials/footer') %>
